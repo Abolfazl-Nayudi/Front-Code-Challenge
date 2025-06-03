@@ -4,7 +4,7 @@ import { fetchUsers } from "../API/fetchUsers";
 import Spinner from "./Spinner";
 import User from "./User";
 
-export default function UsersList() {
+export default function UsersList({ filterCriteria }) {
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
@@ -35,7 +35,6 @@ export default function UsersList() {
       try {
         setLoading(true);
         const { data, hasMore } = await fetchUsers(page);
-        console.log(data);
         setUsers((prev) => [...prev, ...data]);
         setHasMore(hasMore);
       } catch (error) {
@@ -46,9 +45,33 @@ export default function UsersList() {
     })();
   }, [page]);
 
+  let filteredData = users;
+
+  filteredData = users
+    .filter((user) => {
+      if (!filterCriteria.gender) return true;
+      return user.gender === filterCriteria.gender;
+    })
+    .filter((user) => {
+      if (!filterCriteria.searchTerm) return true;
+      return user.firstName
+        .toLowerCase()
+        .includes(filterCriteria.searchTerm.toLowerCase());
+    });
+
+  if (filterCriteria.gender) {
+  }
+  console.log(filteredData);
   return (
     <div className="p-4 flex flex-col items-center gap-4">
-      {users.map((user, index) => {
+      <div className="w-full max-w-2xl shadow-md rounded-md grid grid-cols-5 items-center  p-4">
+        <span>ID</span>
+        <span>avatar</span>
+        <span>First Name</span>
+        <span>Last Name</span>
+        <span>Gender</span>
+      </div>
+      {filteredData.map((user, index) => {
         if (users.length === index + 1) {
           return (
             <User key={user.id} data={user} elementRef={lastUserElementRef} />
