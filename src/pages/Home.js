@@ -15,7 +15,7 @@ export default function Home() {
             src="/sibtorsh-logo.svg"
             alt=""
           />
-          <span className={"font-bold text-xl xl:text-5xl text-green-700"}>
+          <span className={"font-bold text-xl xl:text-5xl text-brand-300"}>
             Welcome to Sibtorsh code challenge
           </span>
           <img

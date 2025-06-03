@@ -10,6 +10,11 @@ export default function Login() {
     username: "",
     password: "",
   });
+
+  const [errorMessage, setErrorMessage] = useState({
+    username: false,
+    password: false,
+  });
   const [isLoading, setIsLoading] = useState(false);
 
   // it's useful for forms with multiple inputs
@@ -19,9 +24,21 @@ export default function Login() {
       [e.target.name]: e.target.value,
     });
   };
+  console.log(formData);
+  console.log(errorMessage);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!formData.password || !formData.username) {
+      setErrorMessage((prev) => {
+        return {
+          username: !formData.username,
+          password: !formData.password,
+        };
+      });
+      return;
+    }
+
     setIsLoading(true);
 
     setTimeout(() => {
@@ -32,30 +49,56 @@ export default function Login() {
 
   return (
     <section className="min-h-screen w-full flex flex-col justify-center items-center">
-      <div className="flex items-center justify-center">
-        <h1 className="text-4xl font-semibold text-green-700">Login</h1>
-        <img src="/sibtorsh-logo.svg" alt="logo" />
+      <div className=" w-full max-w-[450px] flex items-center  relative">
+        <img
+          src="/sibtorsh-logo.svg"
+          alt="logo"
+          className="w-40 inline-block ml-5"
+        />
+        <img
+          src="/arrow.png"
+          className="w-24 -hue-rotate-90 rotate-[120deg] absolute left-[122px] top-5 "
+          alt=""
+        />
+        <span className="text-brand-300 absolute left-52 top-5 text-xl">
+          {" "}
+          Welcome to Sibtorsh
+        </span>
       </div>
-      <div className="shadow-md w-full max-w-[450px]  p-7">
+      <div className="shadow-md w-full max-w-[450px] p-7">
+        <h2 className="text-2xl mb-5 text-center text-brand-300">
+          Please Enter Your Credentials
+        </h2>
         <form
           action=""
           className="flex flex-col gap-6 just"
           onSubmit={handleSubmit}
         >
-          <input
-            type="text"
-            name="username"
-            placeholder="Enter Your Username"
-            className="w-full border p-3 rounded-md"
-            onChange={handleChangeInput}
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Enter Your Password"
-            className="w-full border p-3 rounded-md"
-            onChange={handleChangeInput}
-          />
+          <div>
+            <input
+              type="text"
+              name="username"
+              placeholder="Enter Your Username"
+              className="w-full border p-3 rounded-md"
+              onChange={handleChangeInput}
+            />
+            {errorMessage.username && (
+              <p className="text-red-600 ml-2 mt-2">username is required</p>
+            )}
+          </div>
+
+          <div>
+            <input
+              type="password"
+              name="password"
+              placeholder="Enter Your Password"
+              className="w-full border p-3 rounded-md"
+              onChange={handleChangeInput}
+            />
+            {errorMessage.password && (
+              <p className="text-red-600 ml-2 mt-2">password is required</p>
+            )}
+          </div>
 
           <Button
             text={isLoading ? <Spinner /> : "Login"}

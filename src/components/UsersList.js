@@ -13,7 +13,7 @@ export default function UsersList({ filterCriteria }) {
 
   const observer = useRef(null);
 
-  const lastUserElementRef = useCallback(
+  const lastUserRef = useCallback(
     (node) => {
       if (loading) return;
       if (observer.current) observer.current.disconnect();
@@ -47,24 +47,29 @@ export default function UsersList({ filterCriteria }) {
 
   let filteredData = users;
 
-  filteredData = users
-    .filter((user) => {
-      if (!filterCriteria.gender) return true;
-      return user.gender === filterCriteria.gender;
-    })
-    .filter((user) => {
-      if (!filterCriteria.searchTerm) return true;
-      return user.firstName
-        .toLowerCase()
-        .includes(filterCriteria.searchTerm.toLowerCase());
-    });
-
   if (filterCriteria.gender) {
+    filteredData = users.filter((user) => {
+      return user.gender === filterCriteria.gender;
+    });
   }
-  console.log(filteredData);
+
+  if (filterCriteria.searchTerm) {
+    filteredData = users.filter((user) => {
+      if (!filterCriteria.searchTerm) return true;
+      return (
+        user.firstName
+          .toLowerCase()
+          .includes(filterCriteria.searchTerm.toLowerCase()) ||
+        user.lastName
+          .toLowerCase()
+          .includes(filterCriteria.searchTerm.toLowerCase())
+      );
+    });
+  }
+
   return (
     <div className="p-4 flex flex-col items-center gap-4">
-      <div className="w-full max-w-2xl shadow-md rounded-md grid grid-cols-5 items-center  p-4">
+      <div className="w-full max-w-2xl shadow-md rounded-md grid grid-cols-[50px_repeat(4,_1fr)] items-center  p-4">
         <span>ID</span>
         <span>avatar</span>
         <span>First Name</span>
@@ -72,10 +77,8 @@ export default function UsersList({ filterCriteria }) {
         <span>Gender</span>
       </div>
       {filteredData.map((user, index) => {
-        if (users.length === index + 1) {
-          return (
-            <User key={user.id} data={user} elementRef={lastUserElementRef} />
-          );
+        if (filteredData.length === index + 1) {
+          return <User key={user.id} data={user} elementRef={lastUserRef} />;
         } else {
           return <User key={user.id} data={user} />;
         }
