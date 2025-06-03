@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function Filter({ setFilterCriteria }) {
   const handleChange = (e) => {
     setFilterCriteria((prev) => {
@@ -19,14 +17,14 @@ export default function Filter({ setFilterCriteria }) {
         />
 
         <div>
-          <label htmlFor="gender">Filter By Gender: </label>
+          <label htmlFor="gender"> </label>
           <select
             name="gender"
             id="gender"
             className="border py-2 pe-20 rounded-md"
             onChange={handleChange}
           >
-            |<option value="">_</option>
+            |<option value="">Gender</option>
             <option value="male">male</option>
             <option value="female">female</option>
           </select>

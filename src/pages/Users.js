@@ -8,7 +8,6 @@ export default function Users() {
     gender: "",
   });
 
-  console.log(filterCriteria);
   return (
     <div>
       <Filter setFilterCriteria={setFilterCriteria} />

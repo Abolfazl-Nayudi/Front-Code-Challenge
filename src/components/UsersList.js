@@ -69,7 +69,7 @@ export default function UsersList({ filterCriteria }) {
 
   return (
     <div className="p-4 flex flex-col items-center gap-4">
-      <div className="w-full max-w-2xl shadow-md rounded-md grid grid-cols-[50px_repeat(4,_1fr)] items-center  p-4">
+      <div className="w-full max-w-2xl shadow-md rounded-md hidden sm:grid grid-cols-[50px_repeat(4,_1fr)] items-center p-4 mb-5">
         <span>ID</span>
         <span>avatar</span>
         <span>First Name</span>

@@ -24,8 +24,6 @@ export default function Login() {
       [e.target.name]: e.target.value,
     });
   };
-  console.log(formData);
-  console.log(errorMessage);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -60,13 +58,13 @@ export default function Login() {
           className="w-24 -hue-rotate-90 rotate-[120deg] absolute left-[122px] top-5 "
           alt=""
         />
-        <span className="text-brand-300 absolute left-52 top-5 text-xl">
+        <span className="text-brand-300 absolute left-52 top-5 text-md md:text-xl">
           {" "}
           Welcome to Sibtorsh
         </span>
       </div>
       <div className="shadow-md w-full max-w-[450px] p-7">
-        <h2 className="text-2xl mb-5 text-center text-brand-300">
+        <h2 className="text-xl md:text-2xl mb-5 text-center text-brand-300">
           Please Enter Your Credentials
         </h2>
         <form
